@@ -6,7 +6,7 @@ STATUS_FILE="modem_status.xml"
 get_token() {
     curl -s -X GET "http://$MODEM_IP/api/webserver/SesTokInfo" > ses_tok.xml
     COOKIE=$(grep "SessionID=" ses_tok.xml | cut -b 10-147)
-    TOKEN=$(grep "TokInfo" ses_tok.xml | cut -b 10-41`)
+    TOKEN=$(grep "TokInfo" ses_tok.xml | cut -b 10-41)
     rm ses_tok.xml
 }
 
