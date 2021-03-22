@@ -4,18 +4,14 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 . "$DIR/include.sh"
 
 get_token
+get_xml "monitoring/traffic-statistics" > $STATUS_FILE
 
-curl -s -X GET "http://$MODEM_IP/api/monitoring/traffic-statistics" \
-    -H "Cookie: $COOKIE" \
-    -H "__RequestVerificationToken: $TOKEN" \
-    -H "Content-Type: text/xml" > modem_status.xml
-
-CurConnTime=$(cat modem_status.xml | grep CurrentConnectTime | sed -e 's/<[^>]*>//g')
-CurrUpload=$(cat modem_status.xml | grep "<CurrentUpload>" | sed -e 's/<[^>]*>//g')
-CurrDownload=$(cat modem_status.xml | grep "<CurrentDownload>" | sed -e 's/<[^>]*>//g')
-TotalUpload=$(cat modem_status.xml | grep "<TotalUpload>" | sed -e 's/<[^>]*>//g')
-TotalDownload=$(cat modem_status.xml | grep "<TotalDownload>" | sed -e 's/<[^>]*>//g')
-TotalConnectTime=$(cat modem_status.xml | grep "<TotalConnectTime>" | sed -e 's/<[^>]*>//g')
+CurConnTime=$(cat $STATUS_FILE | grep CurrentConnectTime | sed -e 's/<[^>]*>//g')
+CurrUpload=$(cat $STATUS_FILE | grep "<CurrentUpload>" | sed -e 's/<[^>]*>//g')
+CurrDownload=$(cat $STATUS_FILE | grep "<CurrentDownload>" | sed -e 's/<[^>]*>//g')
+TotalUpload=$(cat $STATUS_FILE | grep "<TotalUpload>" | sed -e 's/<[^>]*>//g')
+TotalDownload=$(cat $STATUS_FILE | grep "<TotalDownload>" | sed -e 's/<[^>]*>//g')
+TotalConnectTime=$(cat $STATUS_FILE | grep "<TotalConnectTime>" | sed -e 's/<[^>]*>//g')
 
 #------------------------------
 # Current Connect Time
@@ -29,7 +25,7 @@ printf 'Current Connect Time : %d days: %02d hours: %02d minutes: %02d sseconds\
 tct_secs=$TotalConnectTime
 printf 'Total Connect Time : %d days: %02d hours: %02d minutes: %02d sseconds\n' $((tct_secs / 86400)) $((tct_secs % 86400 / 3600)) $((tct_secs % 3600 / 60)) $((tct_secs % 60))
 
-#cat modem_status.xml
+#cat $STATUS_FILE
 #------------------------------
 # Current Upload
 #------------------------------
@@ -44,7 +40,7 @@ else
 fi
 
 #------------------------------
-# Current Downloae
+# Current Download
 #------------------------------
 if [ $CurrDownload -lt 1024 ]; then
     echo "Current Download : ${CurrDownload}B"

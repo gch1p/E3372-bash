@@ -4,11 +4,5 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 . "$DIR/include.sh"
 
 get_token
-
-curl -s -X POST "http://$MODEM_IP/api/monitoring/clear-traffic" \
-    -H "Cookie: $COOKIE" \
-    -H "__RequestVerificationToken: $TOKEN" \
-    -H "Content-Type: text/xml" \
-    -d "<request><ClearTraffic>1</ClearTraffic></request>" >modem_status.xml
-
-cat modem_status.xml
+post_xml "monitoring/clear-traffic" \
+    "<request><ClearTraffic>1</ClearTraffic></request>"
