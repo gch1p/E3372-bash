@@ -1,2 +1,8 @@
 # E3372-bash
-Automation e3372 hilink lte modem using bash and huawei web api
+
+Automate E3372 hilink LTE modem using bash and huawei web api.
+
+## Configuration
+
+Specify IP of your modem in the `config.sh` file or `MODEM_IP` environment
+variable.
