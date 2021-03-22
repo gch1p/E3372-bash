@@ -1,6 +1,8 @@
-#!/bin/sh 
+#!/bin/bash
 
-MODEM_IP="192.168.9.1" 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+. "$DIR/config.sh"
+
 curl -s -X GET "http://$MODEM_IP/api/webserver/SesTokInfo" > ses_tok.xml
 COOKIE=`grep "SessionID=" ses_tok.xml | cut -b 10-147`
 TOKEN=`grep "TokInfo" ses_tok.xml | cut -b 10-41` 
