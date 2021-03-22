@@ -5,7 +5,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
 get_token
 get_xml "device/information" > $STATUS_FILE
-get_xml "device/signal" >> $SIGNAL_FILE
+get_xml "device/signal" >> $STATUS_FILE
 
 wmode=$(cat $STATUS_FILE | grep workmode | sed -e 's/<[^>]*>//g')
 rssi=$(cat $STATUS_FILE | grep rssi | sed -e 's/<[^>]*>//g')
