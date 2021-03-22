@@ -67,13 +67,13 @@ fi
 # Total Upload
 #------------------------------
 if [ $TotalUpload -lt 1024 ]; then
-    echo "Totak Upload : ${TotalUpload}B"
+    echo "Total Upload : ${TotalUpload}B"
 elif [ $TotalUpload -lt 1048576 ]; then
     echo "Total Upload : $((TotalUpload/1024))KiB"
 elif [ $TotalUpload -lt 1073741824 ]; then
     echo "Total Upload : $((TotalUpload/1048576))MiB"
 else
-    echo "Tital Upload : $((TotalUpload/1073741824))GiB"
+    echo "Total Upload : $((TotalUpload/1073741824))GiB"
 fi
 
 #------------------------------
@@ -86,7 +86,7 @@ elif [ $TotalDownload -lt 1048576 ]; then
 elif [ $TotalDownload -lt 1073741824 ]; then
     echo "Total Download : $((TotalDownload/1048576))MiB"
 else
-    echo "Tital Doenload : $((TotalDownload/1073741824))GiB"
+    echo "Total Doenload : $((TotalDownload/1073741824))GiB"
 fi
 
 
