@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-. "$DIR/config.sh"
+. "$DIR/include.sh"
 
 get_token
 
