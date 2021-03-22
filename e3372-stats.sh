@@ -7,21 +7,17 @@ curl -s -X GET "http://$MODEM_IP/api/webserver/SesTokInfo" > ses_tok.xml
 COOKIE=`grep "SessionID=" ses_tok.xml | cut -b 10-147`
 TOKEN=`grep "TokInfo" ses_tok.xml | cut -b 10-41` 
 
-curl -s -X GET "http://$MODEM_IP/api/monitoring/traffic-statistics" -H "Cookie: $COOKIE" -H "__RequestVerificationToken: $TOKEN" -H "Content-Type: text/xml" > modem_status.xml
+curl -s -X GET "http://$MODEM_IP/api/monitoring/traffic-statistics" \
+  -H "Cookie: $COOKIE" \
+  -H "__RequestVerificationToken: $TOKEN" \
+  -H "Content-Type: text/xml" > modem_status.xml
 
 
 CurConnTime=$(cat modem_status.xml | grep CurrentConnectTime | sed -e 's/<[^>]*>//g')
-
-
 CurrUpload=$(cat modem_status.xml | grep "<CurrentUpload>" | sed -e 's/<[^>]*>//g')
-
-
 CurrDownload=$(cat modem_status.xml | grep "<CurrentDownload>" | sed -e 's/<[^>]*>//g')
-
 TotalUpload=$(cat modem_status.xml | grep "<TotalUpload>" | sed -e 's/<[^>]*>//g')
-
 TotalDownload=$(cat modem_status.xml | grep "<TotalDownload>" | sed -e 's/<[^>]*>//g')
-
 TotalConnectTime=$(cat modem_status.xml | grep "<TotalConnectTime>" | sed -e 's/<[^>]*>//g')
 
 #------------------------------
@@ -54,9 +50,9 @@ fi
 # Current Downloae
 #------------------------------
 if [ $CurrDownload -lt 1024 ]; then
-    echo "Current Download : ${CurrDowbload}B"
+    echo "Current Download : ${CurrDownload}B"
 elif [ $CurrDownload -lt 1048576 ]; then
-    echo "Current Download : $((CurrDowbload/1024))KiB"
+    echo "Current Download : $((CurrDownload/1024))KiB"
 elif [ $CurrDownload -lt 1073741824 ]; then
     echo "Current Download : $((CurrDownload/1048576))MiB"
 else
@@ -80,7 +76,7 @@ fi
 # Total Download
 #------------------------------
 if [ $TotalDownload -lt 1024 ]; then
-    echo "Total Download : ${TotalDowbload}B"
+    echo "Total Download : ${TotalDownload}B"
 elif [ $TotalDownload -lt 1048576 ]; then
     echo "Total Download : $((TotalDownload/1024))KiB"
 elif [ $TotalDownload -lt 1073741824 ]; then
